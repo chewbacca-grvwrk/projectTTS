@@ -1,0 +1,6 @@
+# .gitignore
+tts/service_account.json
+.env
+.env.local
+.env.*.local
+node_modules/
