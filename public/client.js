@@ -70,10 +70,18 @@ class DataHandler {
     async handleSubmit() {
         const convertButton = document.getElementById('convertButton');
         const loadingIndicator = document.getElementById('loadingIndicator');
+        const conversionTimeEl = document.getElementById('conversionTime');
 
         // 버튼 비활성화 및 로딩 표시
         convertButton.disabled = true;
         loadingIndicator.style.display = 'flex';
+
+        // 타이머 시작
+        let seconds = 0;
+        const timer = setInterval(() => {
+            seconds++;
+            conversionTimeEl.textContent = `${seconds}초`;
+        }, 1000);
 
         const formData = {
             text: document.getElementById('message').value,
@@ -120,6 +128,11 @@ class DataHandler {
             console.error('Error:', error);
             this.displayResult({ error: error.message });
         } finally {
+            // 타이머 중지
+            clearInterval(timer);
+            // 타이머 초기화
+            conversionTimeEl.textContent = '0초';
+
             // 버튼 활성화 및 로딩 표시 숨김
             convertButton.disabled = false;
             loadingIndicator.style.display = 'none';
